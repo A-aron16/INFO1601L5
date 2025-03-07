@@ -136,3 +136,100 @@ let people = [
 ];
 
 console.log(avgBMI(people));
+
+
+
+
+let bob = {
+  fname: "bob",
+  lname: "smith",
+  age: 18,
+  height: 6,
+  transcript: [
+    {
+      course: 'INFO 1603',
+      grades: [89, 34, 67]
+    },
+    {
+      course: 'INFO 1601',
+      grades: [89, 34, 67]
+    }
+  ]
+};
+
+let sally = {
+  fname: "sally",
+  lname: "smith",
+  age: 18,
+  height: 6,
+  transcript: [
+    {
+      course: 'INFO 1601',
+      grades: [100, 89, 79]
+    }
+  ]
+};
+
+let paul = {
+  fname: "paul",
+  lname: "smith",
+  age: 18,
+  height: 6,
+  transcript: [
+    {
+      course: 'INFO 1600',
+      grades: [89, 34, 67]
+    }
+  ]
+};
+
+const students = [bob, sally, paul];
+
+
+function getAverageGrade(student, course) {
+  const courseInfo = student.transcript.find(item => item.course === course);
+  
+  if (!courseInfo) {
+    return -1; 
+  }
+  
+  const grades = courseInfo.grades;
+  const total = grades.reduce((sum, grade) => sum + grade, 0);
+  return total / grades.length;
+}
+
+
+function getAssignmentMark(student, course, num) {
+  const courseInfo = student.transcript.find(item => item.course === course);
+  
+  if (!courseInfo || num < 1 || num > courseInfo.grades.length) {
+    return -1; 
+  }
+  
+  return courseInfo.grades[num - 1];
+}
+
+
+function averageAssessment(students, courseName, assignment) {
+  let totalGrade = 0;
+  let count = 0;
+  
+  for (const student of students) {
+    const courseInfo = student.transcript.find(item => item.course === courseName);
+    
+    if (courseInfo && assignment >= 1 && assignment <= courseInfo.grades.length) {
+      totalGrade += courseInfo.grades[assignment - 1];
+      count++;
+    }
+  }
+  
+  if (count === 0) {
+    return -1; 
+  }
+  
+  return totalGrade / count;
+}
+
+console.log(getAverageGrade(bob, 'INFO 1603')); 
+console.log(getAssignmentMark(bob, 'INFO 1603', 2)); 
+console.log(averageAssessment(students, 'INFO 1603', 2)); 
